@@ -275,3 +275,12 @@ button[type="submit"]:hover {
     grid-template-columns: repeat(4, 1fr);
   }
 }
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: var(--color-blue);
+  color: var(--color-white);
+  margin-top: 2rem;
+}

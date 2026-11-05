@@ -1,0 +1,145 @@
+[
+  {
+    "id": 1,
+    "nome": "Eduardo Gonçalves de Andrade",
+    "apelido": "Tostão",
+    "posicao": "Atacante",
+    "periodo": "1963 a 1972",
+    "anoEstreia": 1963,
+    "jogos": 383,
+    "gols": 245,
+    "titulos": [
+      "Taça Brasil (1966)",
+      "Campeonato Mineiro (1965, 1966, 1967, 1968 e 1969)"
+    ],
+    "resumo": "Maior artilheiro da história do Cruzeiro com 245 gols marcados.",
+    "biografia": "Revelado nas categorias de base do clube, Tostão estreou no time profissional em 1963. Comandou o ataque celeste na conquista da Taça Brasil de 1966 sobre o Santos e no pentacampeonato mineiro consecutivo entre 1965 e 1969, além de ter sido titular da Seleção Brasileira campeã mundial em 1970.",
+    "imagem": "/img/tostao.jpg"
+  },
+  {
+    "id": 2,
+    "nome": "Dirceu Lopes Mendes",
+    "apelido": "Dirceu Lopes",
+    "posicao": "Meio-campo",
+    "periodo": "1963 a 1977",
+    "anoEstreia": 1963,
+    "jogos": 610,
+    "gols": 223,
+    "titulos": [
+      "Taça Brasil (1966)",
+      "Copa Libertadores da América (1976)",
+      "Campeonato Mineiro (1965, 1966, 1967, 1968, 1969, 1972, 1973, 1974 e 1975)"
+    ],
+    "resumo": "Camisa 10 histórico do clube, segundo maior artilheiro e terceiro em número de jogos.",
+    "biografia": "Dirceu Lopes defendeu o Cruzeiro por mais de uma década e formou parceria histórica com Tostão e Piazza. Destacava-se pela velocidade na condução da bola e pelas finalizações de média distância, participando tanto do título nacional de 1966 quanto da campanha da Libertadores de 1976.",
+    "imagem": "/img/dirceu.jpg"
+  },
+  {
+    "id": 3,
+    "nome": "Fábio Deivson Lopes Maciel",
+    "apelido": "Fábio",
+    "posicao": "Goleiro",
+    "periodo": "2000 e 2005 a 2021",
+    "anoEstreia": 2000,
+    "jogos": 976,
+    "gols": 0,
+    "titulos": [
+      "Campeonato Brasileiro (2013 e 2014)",
+      "Copa do Brasil (2000, 2017 e 2018)",
+      "Campeonato Mineiro (2006, 2008, 2009, 2011, 2014, 2018 e 2019)"
+    ],
+    "resumo": "Jogador que mais vezes vestiu a camisa do Cruzeiro, com 976 partidas.",
+    "biografia": "Após uma primeira passagem em 2000, Fábio retornou ao Cruzeiro em 2005 e permaneceu como titular absoluto até o fim de 2021. Foi capitão nas conquistas do bicampeonato brasileiro em 2013 e 2014 e decisivo nas disputas de pênaltis dos títulos da Copa do Brasil de 2017 e 2018.",
+    "imagem": "/img/fabio.jpg"
+  },
+  {
+    "id": 4,
+    "nome": "Juan Pablo Sorín",
+    "apelido": "Sorín",
+    "posicao": "Defensor",
+    "periodo": "2000 a 2002, 2004 e 2008 a 2009",
+    "anoEstreia": 2000,
+    "jogos": 127,
+    "gols": 18,
+    "titulos": [
+      "Copa do Brasil (2000)",
+      "Copa Sul-Minas (2001 e 2002)",
+      "Campeonato Mineiro (2009)"
+    ],
+    "resumo": "Lateral-esquerdo argentino que se destacou pelo apoio constante ao ataque e entrega em campo.",
+    "biografia": "Contratado no ano 2000, Sorín rapidamente ganhou a identificação da torcida ao marcar o gol do título da Copa Sul-Minas e participar da conquista da Copa do Brasil daquele ano. Teve três passagens pelo clube e encerrou a carreira profissional vestindo a camisa do Cruzeiro em 2009.",
+    "imagem": "/img/sorin.jpg"
+  },
+  {
+    "id": 5,
+    "nome": "Alexsandro de Souza",
+    "apelido": "Alex",
+    "posicao": "Meio-campo",
+    "periodo": "2001 e 2002 a 2004",
+    "anoEstreia": 2001,
+    "jogos": 121,
+    "gols": 64,
+    "titulos": [
+      "Campeonato Brasileiro (2003)",
+      "Copa do Brasil (2003)",
+      "Campeonato Mineiro (2003 e 2004)"
+    ],
+    "resumo": "Meia e capitão da equipe que conquistou a Tríplice Coroa na temporada de 2003.",
+    "biografia": "Em sua segunda passagem pelo Cruzeiro, sob o comando de Vanderlei Luxemburgo, Alex liderou a equipe que venceu o Campeonato Mineiro, a Copa do Brasil e o Campeonato Brasileiro de pontos corridos em 2003. Naquele ano, marcou 39 gols e distribuiu dezenas de assistências.",
+    "imagem": "/img/alex.jpg"
+  },
+  {
+    "id": 6,
+    "nome": "Nélson de Jesus Silva",
+    "apelido": "Dida",
+    "posicao": "Goleiro",
+    "periodo": "1994 a 1998",
+    "anoEstreia": 1994,
+    "jogos": 304,
+    "gols": 0,
+    "titulos": [
+      "Copa Libertadores da América (1997)",
+      "Copa do Brasil (1996)",
+      "Copa Ouro (1995)",
+      "Campeonato Mineiro (1994, 1996, 1997 e 1998)"
+    ],
+    "resumo": "Goleiro titular nas conquistas da Copa do Brasil de 1996 e da Libertadores de 1997.",
+    "biografia": "Dida chegou ao Cruzeiro em 1994 e conquistou títulos em todas as temporadas que disputou pelo clube. Ficou marcado pela regularidade debaixo das traves e pelas defesas em momentos decisivos na campanha do bicampeonato da Copa Libertadores em 1997.",
+    "imagem": "/img/dida.jpg"
+  },
+  {
+    "id": 7,
+    "nome": "Wilson da Silva Piazza",
+    "apelido": "Piazza",
+    "posicao": "Meio-campo",
+    "periodo": "1964 a 1977",
+    "anoEstreia": 1964,
+    "jogos": 566,
+    "gols": 40,
+    "titulos": [
+      "Taça Brasil (1966)",
+      "Copa Libertadores da América (1976)",
+      "Campeonato Mineiro (1965, 1966, 1967, 1968, 1969, 1972, 1973, 1974, 1975 e 1977)"
+    ],
+    "resumo": "Volante e capitão que levantou as taças de 1966 e da Libertadores de 1976.",
+    "biografia": "Piazza atuou por 14 temporadas no Cruzeiro e é o quarto jogador com mais partidas pelo clube. Como volante e também zagueiro na Seleção Brasileira de 1970, era responsável pela proteção da defesa e pela saída de bola da equipe.",
+    "imagem": "/img/piazza.jpg"
+  },
+  {
+    "id": 8,
+    "nome": "Marcelo Martins Moreno",
+    "apelido": "Marcelo Moreno",
+    "posicao": "Atacante",
+    "periodo": "2007 a 2008, 2014, 2020 a 2021 e 2024",
+    "anoEstreia": 2007,
+    "jogos": 147,
+    "gols": 54,
+    "titulos": [
+      "Campeonato Brasileiro (2014)",
+      "Campeonato Mineiro (2008 e 2014)"
+    ],
+    "resumo": "Maior artilheiro estrangeiro da história do Cruzeiro, com 54 gols em quatro passagens.",
+    "biografia": "O centroavante boliviano ganhou projeção no clube ao ser artilheiro da Copa Libertadores de 2008. Voltou em 2014 como peça importante do ataque campeão brasileiro daquele ano e retornou novamente em 2020 para ajudar a equipe em um período difícil da história do clube.",
+    "imagem": "/img/moreno.jpg"
+  }
+]

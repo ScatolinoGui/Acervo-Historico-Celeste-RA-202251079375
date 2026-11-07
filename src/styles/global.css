@@ -95,6 +95,11 @@ textarea {
   color: var(--cor-cabecalho-texto);
 }
 
+.site-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
 .header-actions {
   display: flex;
   flex-wrap: wrap;
@@ -171,6 +176,28 @@ textarea {
   padding: 2rem;
   text-align: center;
   color: var(--cor-texto-secundario);
+}
+
+.placeholder-actions {
+  margin-top: 1rem;
+}
+
+.inline-link,
+.back-link {
+  color: var(--cor-primaria);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.inline-link:hover,
+.back-link:hover {
+  color: var(--cor-primaria-hover);
+  text-decoration: underline;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 1.25rem;
 }
 
 /* Rodapé */

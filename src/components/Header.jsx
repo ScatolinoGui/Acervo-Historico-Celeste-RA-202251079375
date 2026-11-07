@@ -1,3 +1,4 @@
+import { Link, NavLink } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext.jsx';
 
 function Header() {
@@ -6,20 +7,29 @@ function Header() {
   return (
     <header className="site-header">
       <div className="header-container">
-        <h1 className="site-title">Acervo Histórico Celeste</h1>
+        <h1 className="site-title">
+          <Link to="/">Acervo Histórico Celeste</Link>
+        </h1>
 
         <div className="header-actions">
           <nav aria-label="Navegação principal">
             <ul className="nav-list">
               <li>
-                <a href="#galeria" className="nav-link active">
+                <NavLink
+                  to="/"
+                  end
+                  className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
+                >
                   Galeria
-                </a>
+                </NavLink>
               </li>
               <li>
-                <a href="#sugerir" className="nav-link">
+                <NavLink
+                  to="/novo"
+                  className={({ isActive }) => (isActive ? 'nav-link active' : 'nav-link')}
+                >
                   Sugerir ídolo
-                </a>
+                </NavLink>
               </li>
             </ul>
           </nav>

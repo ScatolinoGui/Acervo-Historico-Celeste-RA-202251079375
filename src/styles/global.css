@@ -12,6 +12,9 @@
   --cor-texto: #1f2937;
   --cor-texto-secundario: #4b5563;
   --cor-foco: #003399;
+  --cor-erro-bg: #fef2f2;
+  --cor-erro-borda: #fecaca;
+  --cor-erro-texto: #991b1b;
 
   --fonte-principal: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --largura-maxima: 1200px;
@@ -30,6 +33,9 @@
   --cor-texto: #f1f5f9;
   --cor-texto-secundario: #94a3b8;
   --cor-foco: #60a5fa;
+  --cor-erro-bg: rgba(185, 28, 28, 0.16);
+  --cor-erro-borda: rgba(248, 113, 113, 0.45);
+  --cor-erro-texto: #fca5a5;
 }
 
 *,
@@ -198,6 +204,99 @@ textarea {
 .back-link {
   display: inline-block;
   margin-top: 1.25rem;
+}
+
+/* Estados de carregamento, erro e lista vazia */
+.status-box {
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-borda);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  color: var(--cor-texto-secundario);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.status-erro {
+  background-color: var(--cor-erro-bg);
+  border-color: var(--cor-erro-borda);
+  color: var(--cor-erro-texto);
+}
+
+.status-texto {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.loading-spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--cor-borda);
+  border-top-color: var(--cor-primaria);
+  border-radius: 50%;
+  animation: girarSpinner 0.8s linear infinite;
+}
+
+@keyframes girarSpinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.status-button {
+  background-color: var(--cor-primaria);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.55rem 1.1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+[data-theme="dark"] .status-button {
+  color: #0f172a;
+}
+
+.status-button:hover {
+  background-color: var(--cor-primaria-hover);
+}
+
+/* Lista provisoria de jogadores (sera substituida pelos cards no Commit #06) */
+.lista-jogadores-simples {
+  list-style: none;
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-borda);
+  overflow: hidden;
+}
+
+.lista-jogadores-item {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--cor-borda);
+}
+
+.lista-jogadores-item:last-child {
+  border-bottom: none;
+}
+
+.lista-jogadores-nome {
+  font-weight: 600;
+  color: var(--cor-texto);
+}
+
+.lista-jogadores-posicao {
+  color: var(--cor-texto-secundario);
+  font-size: 0.9rem;
+  margin-left: 0.5rem;
 }
 
 /* Rodapé */

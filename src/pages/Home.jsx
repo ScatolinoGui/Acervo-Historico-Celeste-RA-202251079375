@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { buscarJogadores } from '../services/api.js';
 import StatusMensagem from '../components/StatusMensagem.jsx';
+import GaleriaGrid from '../components/GaleriaGrid.jsx';
 
 function Home() {
   const [jogadores, setJogadores] = useState([]);
@@ -71,19 +71,7 @@ function Home() {
       )}
 
       {!carregando && !erro && jogadores.length > 0 && (
-        <ul className="lista-jogadores-simples">
-          {jogadores.map((jogador) => (
-            <li key={jogador.id} className="lista-jogadores-item">
-              <div>
-                <span className="lista-jogadores-nome">{jogador.apelido}</span>
-                <span className="lista-jogadores-posicao">({jogador.posicao})</span>
-              </div>
-              <Link to={`/item/${jogador.id}`} className="inline-link">
-                Ver detalhes
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <GaleriaGrid jogadores={jogadores} />
       )}
     </section>
   );

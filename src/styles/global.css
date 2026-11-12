@@ -265,38 +265,89 @@ textarea {
   background-color: var(--cor-primaria-hover);
 }
 
-/* Lista provisoria de jogadores (sera substituida pelos cards no Commit #06) */
-.lista-jogadores-simples {
-  list-style: none;
+/* Galeria de jogadores */
+.galeria-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.card-jogador {
+  display: flex;
+  flex-direction: column;
   background-color: var(--cor-superficie);
   border: 1px solid var(--cor-borda);
   border-radius: var(--raio-borda);
   overflow: hidden;
 }
 
-.lista-jogadores-item {
+.card-jogador img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  background-color: var(--cor-borda);
+}
+
+.card-jogador-info {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 1rem 1.25rem;
-  border-bottom: 1px solid var(--cor-borda);
+  flex-direction: column;
+  flex: 1;
+  padding: 1rem 1.25rem 1.25rem;
 }
 
-.lista-jogadores-item:last-child {
-  border-bottom: none;
-}
-
-.lista-jogadores-nome {
+.card-jogador-posicao {
+  align-self: flex-start;
+  font-size: 0.8rem;
   font-weight: 600;
-  color: var(--cor-texto);
+  color: var(--cor-primaria);
+  border: 1px solid var(--cor-primaria);
+  border-radius: 4px;
+  padding: 0.1rem 0.5rem;
+  margin-bottom: 0.6rem;
 }
 
-.lista-jogadores-posicao {
+.card-jogador-nome {
+  font-size: 1.05rem;
+  color: var(--cor-texto);
+  line-height: 1.3;
+}
+
+.card-jogador-apelido {
   color: var(--cor-texto-secundario);
   font-size: 0.9rem;
-  margin-left: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.card-jogador-periodo {
+  font-size: 0.9rem;
+  color: var(--cor-texto-secundario);
+  margin-bottom: 0.5rem;
+}
+
+.card-jogador-resumo {
+  font-size: 0.95rem;
+  color: var(--cor-texto);
+  margin-bottom: 1rem;
+}
+
+.btn-detalhes {
+  margin-top: auto;
+  align-self: flex-start;
+  background-color: var(--cor-primaria);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+}
+
+[data-theme="dark"] .btn-detalhes {
+  color: #0f172a;
+}
+
+.btn-detalhes:hover {
+  background-color: var(--cor-primaria-hover);
 }
 
 /* Rodapé */
@@ -313,5 +364,15 @@ textarea {
   .header-container {
     flex-direction: row;
     justify-content: space-between;
+  }
+
+  .galeria-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .galeria-grid {
+    grid-template-columns: repeat(4, 1fr);
   }
 }

@@ -31,7 +31,7 @@ function StatusMensagem({ tipo, mensagem, aoTentarNovamente, aoLimparFiltros }) 
 
   if (tipo === 'vazio') {
     return (
-      <div className="status-box" role="status">
+      <div className="status-box" role="status" aria-live="polite">
         <p className="status-texto">
           {mensagem || 'Nenhum jogador encontrado.'}
         </p>

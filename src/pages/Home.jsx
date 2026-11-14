@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { buscarJogadores } from '../services/api.js';
 import StatusMensagem from '../components/StatusMensagem.jsx';
+import FiltroBusca from '../components/FiltroBusca.jsx';
 import GaleriaGrid from '../components/GaleriaGrid.jsx';
 
 function Home() {
@@ -8,6 +9,9 @@ function Home() {
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState(null);
   const [tentativa, setTentativa] = useState(0);
+
+  const [busca, setBusca] = useState('');
+  const [posicaoSelecionada, setPosicaoSelecionada] = useState('Todas');
 
   useEffect(() => {
     const controller = new AbortController();
@@ -44,6 +48,26 @@ function Home() {
     setTentativa((valorAtual) => valorAtual + 1);
   }
 
+  function limparFiltros() {
+    setBusca('');
+    setPosicaoSelecionada('Todas');
+  }
+
+  // Lista derivada: aplica busca por nome/apelido e filtro por posição sem alterar o array original
+  const termoNormalizado = busca.trim().toLowerCase();
+
+  const jogadoresFiltrados = jogadores.filter((jogador) => {
+    const correspondePosicao =
+      posicaoSelecionada === 'Todas' || jogador.posicao === posicaoSelecionada;
+
+    const correspondeTexto =
+      termoNormalizado === '' ||
+      jogador.nome.toLowerCase().includes(termoNormalizado) ||
+      jogador.apelido.toLowerCase().includes(termoNormalizado);
+
+    return correspondePosicao && correspondeTexto;
+  });
+
   return (
     <section aria-labelledby="titulo-galeria">
       <div className="page-header">
@@ -71,7 +95,27 @@ function Home() {
       )}
 
       {!carregando && !erro && jogadores.length > 0 && (
-        <GaleriaGrid jogadores={jogadores} />
+        <>
+          <FiltroBusca
+            busca={busca}
+            aoMudarBusca={setBusca}
+            posicaoSelecionada={posicaoSelecionada}
+            aoMudarPosicao={setPosicaoSelecionada}
+            totalExibido={jogadoresFiltrados.length}
+            totalGeral={jogadores.length}
+            aoLimparFiltros={limparFiltros}
+          />
+
+          {jogadoresFiltrados.length === 0 ? (
+            <StatusMensagem
+              tipo="vazio"
+              mensagem="Nenhum jogador encontrado com os filtros selecionados."
+              aoLimparFiltros={limparFiltros}
+            />
+          ) : (
+            <GaleriaGrid jogadores={jogadoresFiltrados} />
+          )}
+        </>
       )}
     </section>
   );

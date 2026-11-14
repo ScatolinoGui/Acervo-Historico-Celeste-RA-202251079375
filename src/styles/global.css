@@ -265,6 +265,83 @@ textarea {
   background-color: var(--cor-primaria-hover);
 }
 
+/* Barra de busca e filtro por posição */
+.filtro-busca {
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-borda);
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.filtro-controles {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.filtro-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  flex: 1;
+}
+
+.filtro-campo label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--cor-texto);
+}
+
+.filtro-campo input,
+.filtro-campo select {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  border: 1px solid var(--cor-borda);
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+.filtro-resumo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--cor-borda);
+}
+
+.filtro-contador {
+  font-size: 0.9rem;
+  color: var(--cor-texto-secundario);
+}
+
+.btn-limpar-filtros {
+  background-color: transparent;
+  color: var(--cor-primaria);
+  border: 1px solid var(--cor-primaria);
+  border-radius: 6px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-limpar-filtros:hover {
+  background-color: var(--cor-primaria);
+  color: #ffffff;
+}
+
+[data-theme="dark"] .btn-limpar-filtros:hover {
+  color: #0f172a;
+}
+
 /* Galeria de jogadores */
 .galeria-grid {
   display: grid;
@@ -364,6 +441,11 @@ textarea {
   .header-container {
     flex-direction: row;
     justify-content: space-between;
+  }
+
+  .filtro-controles {
+    flex-direction: row;
+    align-items: flex-end;
   }
 
   .galeria-grid {

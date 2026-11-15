@@ -427,6 +427,99 @@ textarea {
   background-color: var(--cor-primaria-hover);
 }
 
+/* Página de detalhes do jogador */
+.detalhes-jogador {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-borda);
+  padding: 1.5rem;
+}
+
+.detalhes-midia img {
+  width: 100%;
+  max-height: 360px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--cor-borda);
+  background-color: var(--cor-borda);
+}
+
+.detalhes-conteudo {
+  display: flex;
+  flex-direction: column;
+}
+
+.detalhes-nome {
+  font-size: 1.4rem;
+  color: var(--cor-texto);
+  line-height: 1.3;
+}
+
+.detalhes-apelido {
+  font-size: 0.95rem;
+  color: var(--cor-texto-secundario);
+  margin-bottom: 1.25rem;
+}
+
+.detalhes-estatisticas {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.estatistica-item {
+  background-color: var(--cor-fundo);
+  border: 1px solid var(--cor-borda);
+  border-radius: 6px;
+  padding: 0.75rem;
+}
+
+.estatistica-item dt {
+  font-size: 0.8rem;
+  color: var(--cor-texto-secundario);
+  margin-bottom: 0.2rem;
+}
+
+.estatistica-item dd {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--cor-texto);
+}
+
+.detalhes-bloco {
+  margin-bottom: 1.25rem;
+}
+
+.detalhes-bloco h4 {
+  font-size: 1rem;
+  color: var(--cor-texto);
+  margin-bottom: 0.4rem;
+}
+
+.detalhes-bloco p {
+  font-size: 0.95rem;
+  color: var(--cor-texto);
+}
+
+.detalhes-titulos {
+  padding-left: 1.25rem;
+  color: var(--cor-texto);
+  font-size: 0.95rem;
+}
+
+.detalhes-titulos li {
+  margin-bottom: 0.3rem;
+}
+
+.detalhes-acoes {
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+
 /* Rodapé */
 .site-footer {
   background-color: var(--cor-cabecalho-bg);
@@ -450,6 +543,11 @@ textarea {
 
   .galeria-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .detalhes-jogador {
+    grid-template-columns: 300px 1fr;
+    align-items: start;
   }
 }
 

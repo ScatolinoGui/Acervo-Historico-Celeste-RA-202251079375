@@ -1,48 +1,10 @@
-import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { buscarJogadores } from '../services/api.js';
+import { useJogadores } from '../context/JogadoresContext.jsx';
 import StatusMensagem from '../components/StatusMensagem.jsx';
 
 function Detalhes() {
   const { id } = useParams();
-
-  const [jogadores, setJogadores] = useState([]);
-  const [carregando, setCarregando] = useState(true);
-  const [erro, setErro] = useState(null);
-  const [tentativa, setTentativa] = useState(0);
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    async function carregarDados() {
-      setCarregando(true);
-      setErro(null);
-
-      try {
-        const dados = await buscarJogadores(controller.signal);
-        setJogadores(Array.isArray(dados) ? dados : []);
-      } catch (err) {
-        if (err.name === 'AbortError') {
-          return;
-        }
-        setErro(err.message || 'Erro ao buscar os dados do jogador.');
-      } finally {
-        if (!controller.signal.aborted) {
-          setCarregando(false);
-        }
-      }
-    }
-
-    carregarDados();
-
-    return () => {
-      controller.abort();
-    };
-  }, [tentativa]);
-
-  function tentarNovamente() {
-    setTentativa((valorAtual) => valorAtual + 1);
-  }
+  const { jogadores, carregando, erro, tentarNovamente } = useJogadores();
 
   function usarImagemReserva(evento) {
     const imagem = evento.currentTarget;

@@ -1,52 +1,14 @@
-import { useState, useEffect } from 'react';
-import { buscarJogadores } from '../services/api.js';
+import { useState } from 'react';
+import { useJogadores } from '../context/JogadoresContext.jsx';
 import StatusMensagem from '../components/StatusMensagem.jsx';
 import FiltroBusca from '../components/FiltroBusca.jsx';
 import GaleriaGrid from '../components/GaleriaGrid.jsx';
 
 function Home() {
-  const [jogadores, setJogadores] = useState([]);
-  const [carregando, setCarregando] = useState(true);
-  const [erro, setErro] = useState(null);
-  const [tentativa, setTentativa] = useState(0);
+  const { jogadores, carregando, erro, tentarNovamente } = useJogadores();
 
   const [busca, setBusca] = useState('');
   const [posicaoSelecionada, setPosicaoSelecionada] = useState('Todas');
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    async function carregarDados() {
-      setCarregando(true);
-      setErro(null);
-
-      try {
-        const dados = await buscarJogadores(controller.signal);
-        setJogadores(Array.isArray(dados) ? dados : []);
-      } catch (err) {
-        // Ignora o erro quando a requisição é cancelada na desmontagem do componente
-        if (err.name === 'AbortError') {
-          return;
-        }
-        setErro(err.message || 'Erro ao buscar a lista de jogadores.');
-      } finally {
-        if (!controller.signal.aborted) {
-          setCarregando(false);
-        }
-      }
-    }
-
-    carregarDados();
-
-    // Limpeza do efeito: cancela a requisição pendente se o usuário sair da página
-    return () => {
-      controller.abort();
-    };
-  }, [tentativa]);
-
-  function tentarNovamente() {
-    setTentativa((valorAtual) => valorAtual + 1);
-  }
 
   function limparFiltros() {
     setBusca('');

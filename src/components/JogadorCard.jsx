@@ -1,12 +1,20 @@
 import { Link } from 'react-router-dom';
 
 function JogadorCard({ jogador }) {
-  // Se a foto .jpg não existir em public/img, usa a versão .svg da mesma pasta
+  // Se a foto .jpg falhar, tenta a versão .svg local; qualquer outro erro usa a imagem padrão
   function usarImagemReserva(evento) {
     const imagem = evento.currentTarget;
+    if (imagem.dataset.fallbackAplicado) {
+      return;
+    }
+    imagem.dataset.fallbackAplicado = 'true';
+
     if (imagem.src.endsWith('.jpg')) {
       imagem.src = imagem.src.replace(/\.jpg$/, '.svg');
+      return;
     }
+
+    imagem.src = '/img/padrao.svg';
   }
 
   return (

@@ -6,13 +6,21 @@ const CHAVE_TEMA = 'acervo_tema';
 
 export function ThemeProvider({ children }) {
   const [tema, setTema] = useState(() => {
-    const temaSalvo = localStorage.getItem(CHAVE_TEMA);
-    return temaSalvo === 'dark' ? 'dark' : 'light';
+    try {
+      const temaSalvo = localStorage.getItem(CHAVE_TEMA);
+      return temaSalvo === 'dark' ? 'dark' : 'light';
+    } catch {
+      return 'light';
+    }
   });
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', tema);
-    localStorage.setItem(CHAVE_TEMA, tema);
+    try {
+      localStorage.setItem(CHAVE_TEMA, tema);
+    } catch {
+      // Ignora falhas de escrita quando o armazenamento local estiver indisponível
+    }
   }, [tema]);
 
   function alternarTema() {

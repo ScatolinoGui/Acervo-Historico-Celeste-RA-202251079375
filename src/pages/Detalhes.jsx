@@ -8,9 +8,17 @@ function Detalhes() {
 
   function usarImagemReserva(evento) {
     const imagem = evento.currentTarget;
+    if (imagem.dataset.fallbackAplicado) {
+      return;
+    }
+    imagem.dataset.fallbackAplicado = 'true';
+
     if (imagem.src.endsWith('.jpg')) {
       imagem.src = imagem.src.replace(/\.jpg$/, '.svg');
+      return;
     }
+
+    imagem.src = '/img/padrao.svg';
   }
 
   const jogador = jogadores.find((item) => String(item.id) === String(id));
@@ -96,8 +104,8 @@ function Detalhes() {
               <div className="detalhes-bloco">
                 <h4>Títulos conquistados</h4>
                 <ul className="detalhes-titulos">
-                  {jogador.titulos.map((titulo) => (
-                    <li key={titulo}>{titulo}</li>
+                  {jogador.titulos.map((titulo, indice) => (
+                    <li key={`${titulo}-${indice}`}>{titulo}</li>
                   ))}
                 </ul>
               </div>

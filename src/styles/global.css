@@ -58,6 +58,7 @@ body {
   color: var(--cor-texto);
   line-height: 1.6;
   min-height: 100vh;
+  overflow-x: clip;
 }
 
 img {
@@ -73,7 +74,12 @@ textarea {
   color: inherit;
 }
 
-:focus-visible {
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
   outline: 2px solid var(--cor-foco);
   outline-offset: 2px;
 }
@@ -82,6 +88,27 @@ textarea {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+/* Link de acessibilidade para navegação por teclado */
+.skip-link {
+  position: absolute;
+  left: 0.75rem;
+  top: -100px;
+  z-index: 1000;
+  background-color: var(--cor-superficie);
+  color: var(--cor-primaria);
+  border: 2px solid var(--cor-foco);
+  border-radius: 6px;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  top: 0.75rem;
 }
 
 /* Cabeçalho principal */
@@ -98,13 +125,15 @@ textarea {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 0.85rem;
 }
 
 .site-title {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: 700;
   color: var(--cor-cabecalho-texto);
+  text-align: center;
+  line-height: 1.25;
 }
 
 .site-title a {
@@ -117,13 +146,15 @@ textarea {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 1.25rem;
+  gap: 0.75rem 1.25rem;
 }
 
 .nav-list {
   list-style: none;
   display: flex;
-  gap: 1.25rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem 1rem;
 }
 
 .nav-link {
@@ -163,7 +194,11 @@ textarea {
   width: 100%;
   max-width: var(--largura-maxima);
   margin: 0 auto;
-  padding: 2rem 1rem;
+  padding: 1.5rem 1rem;
+}
+
+.main-content:focus {
+  outline: none;
 }
 
 .page-header {
@@ -171,9 +206,10 @@ textarea {
 }
 
 .section-title {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   color: var(--cor-primaria);
   margin-bottom: 0.5rem;
+  line-height: 1.3;
 }
 
 .section-description {
@@ -181,35 +217,17 @@ textarea {
   max-width: 700px;
 }
 
-.placeholder-box {
-  background-color: var(--cor-superficie);
-  border: 1px solid var(--cor-borda);
-  border-radius: var(--raio-borda);
-  padding: 2rem;
-  text-align: center;
-  color: var(--cor-texto-secundario);
-}
-
-.placeholder-actions {
-  margin-top: 1rem;
-}
-
-.inline-link,
 .back-link {
+  display: inline-block;
+  margin-top: 1.25rem;
   color: var(--cor-primaria);
   font-weight: 600;
   text-decoration: none;
 }
 
-.inline-link:hover,
 .back-link:hover {
   color: var(--cor-primaria-hover);
   text-decoration: underline;
-}
-
-.back-link {
-  display: inline-block;
-  margin-top: 1.25rem;
 }
 
 /* Estados de carregamento, erro e lista vazia */
@@ -217,7 +235,7 @@ textarea {
   background-color: var(--cor-superficie);
   border: 1px solid var(--cor-borda);
   border-radius: var(--raio-borda);
-  padding: 2rem 1.5rem;
+  padding: 2rem 1.25rem;
   text-align: center;
   color: var(--cor-texto-secundario);
   display: flex;
@@ -276,7 +294,7 @@ textarea {
   background-color: var(--cor-superficie);
   border: 1px solid var(--cor-borda);
   border-radius: var(--raio-borda);
-  padding: 1.25rem;
+  padding: 1rem;
   margin-bottom: 1.5rem;
   display: flex;
   flex-direction: column;
@@ -294,6 +312,7 @@ textarea {
   flex-direction: column;
   gap: 0.4rem;
   flex: 1;
+  min-width: 0;
 }
 
 .filtro-campo label {
@@ -305,6 +324,7 @@ textarea {
 .filtro-campo input,
 .filtro-campo select {
   width: 100%;
+  max-width: 100%;
   padding: 0.6rem 0.75rem;
   background-color: var(--cor-fundo);
   color: var(--cor-texto);
@@ -351,13 +371,14 @@ textarea {
 /* Galeria de jogadores */
 .galeria-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 1.5rem;
 }
 
 .card-jogador {
   display: flex;
   flex-direction: column;
+  min-width: 0;
   background-color: var(--cor-superficie);
   border: 1px solid var(--cor-borda);
   border-radius: var(--raio-borda);
@@ -368,6 +389,7 @@ textarea {
   width: 100%;
   height: 220px;
   object-fit: cover;
+  object-position: center top;
   background-color: var(--cor-borda);
 }
 
@@ -375,6 +397,7 @@ textarea {
   display: flex;
   flex-direction: column;
   flex: 1;
+  min-width: 0;
   padding: 1rem 1.25rem 1.25rem;
 }
 
@@ -398,6 +421,7 @@ textarea {
   font-size: 1.05rem;
   color: var(--cor-texto);
   line-height: 1.3;
+  overflow-wrap: break-word;
 }
 
 .card-jogador-apelido {
@@ -416,6 +440,7 @@ textarea {
   font-size: 0.95rem;
   color: var(--cor-texto);
   margin-bottom: 1rem;
+  overflow-wrap: break-word;
 }
 
 .btn-detalhes {
@@ -441,18 +466,19 @@ textarea {
 /* Página de detalhes do jogador */
 .detalhes-jogador {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem;
   background-color: var(--cor-superficie);
   border: 1px solid var(--cor-borda);
   border-radius: var(--raio-borda);
-  padding: 1.5rem;
+  padding: 1rem;
 }
 
 .detalhes-midia img {
   width: 100%;
   max-height: 360px;
   object-fit: cover;
+  object-position: center top;
   border-radius: 6px;
   border: 1px solid var(--cor-borda);
   background-color: var(--cor-borda);
@@ -461,12 +487,14 @@ textarea {
 .detalhes-conteudo {
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .detalhes-nome {
-  font-size: 1.4rem;
+  font-size: 1.35rem;
   color: var(--cor-texto);
   line-height: 1.3;
+  overflow-wrap: break-word;
 }
 
 .detalhes-apelido {
@@ -477,12 +505,13 @@ textarea {
 
 .detalhes-estatisticas {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.75rem;
   margin-bottom: 1.25rem;
 }
 
 .estatistica-item {
+  min-width: 0;
   background-color: var(--cor-fundo);
   border: 1px solid var(--cor-borda);
   border-radius: 6px;
@@ -496,9 +525,10 @@ textarea {
 }
 
 .estatistica-item dd {
-  font-size: 1.05rem;
+  font-size: 0.98rem;
   font-weight: 600;
   color: var(--cor-texto);
+  overflow-wrap: break-word;
 }
 
 .detalhes-bloco {
@@ -514,6 +544,7 @@ textarea {
 .detalhes-bloco p {
   font-size: 0.95rem;
   color: var(--cor-texto);
+  overflow-wrap: break-word;
 }
 
 .detalhes-titulos {
@@ -533,6 +564,7 @@ textarea {
 
 /* Formulário de sugestão de jogador */
 .alerta-sucesso {
+  width: 100%;
   max-width: 760px;
   background-color: var(--cor-sucesso-bg);
   border: 1px solid var(--cor-sucesso-borda);
@@ -555,25 +587,23 @@ textarea {
   margin-top: 1rem;
 }
 
-.alerta-sucesso-acoes .btn-detalhes {
-  margin-top: 0;
-}
-
+.alerta-sucesso-acoes .btn-detalhes,
 .alerta-sucesso-acoes .back-link {
   margin-top: 0;
 }
 
 .form-sugerir {
+  width: 100%;
   max-width: 760px;
   background-color: var(--cor-superficie);
   border: 1px solid var(--cor-borda);
   border-radius: var(--raio-borda);
-  padding: 1.5rem;
+  padding: 1rem;
 }
 
 .form-linha {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 0 1.25rem;
 }
 
@@ -582,6 +612,7 @@ textarea {
   flex-direction: column;
   gap: 0.35rem;
   margin-bottom: 1rem;
+  min-width: 0;
 }
 
 .form-campo label {
@@ -594,6 +625,7 @@ textarea {
 .form-campo select,
 .form-campo textarea {
   width: 100%;
+  max-width: 100%;
   padding: 0.6rem 0.75rem;
   background-color: var(--cor-fundo);
   color: var(--cor-texto);
@@ -643,6 +675,7 @@ textarea {
   font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
+  max-width: 100%;
 }
 
 [data-theme="dark"] .btn-enviar {
@@ -663,10 +696,33 @@ textarea {
   font-size: 0.9rem;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .loading-spinner {
+    animation: none;
+  }
+}
+
 @media (min-width: 768px) {
   .header-container {
     flex-direction: row;
     justify-content: space-between;
+  }
+
+  .site-title {
+    font-size: 1.5rem;
+    text-align: left;
+  }
+
+  .main-content {
+    padding: 2rem 1rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .filtro-busca {
+    padding: 1.25rem;
   }
 
   .filtro-controles {
@@ -675,21 +731,35 @@ textarea {
   }
 
   .galeria-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .detalhes-jogador {
-    grid-template-columns: 300px 1fr;
+    grid-template-columns: 300px minmax(0, 1fr);
     align-items: start;
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+
+  .detalhes-nome {
+    font-size: 1.4rem;
+  }
+
+  .estatistica-item dd {
+    font-size: 1.05rem;
+  }
+
+  .form-sugerir {
+    padding: 1.5rem;
   }
 
   .form-linha {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 @media (min-width: 1200px) {
   .galeria-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }

@@ -13,9 +13,13 @@ function App() {
       <JogadoresProvider>
         <BrowserRouter>
           <div className="app-container">
+            <a href="#conteudo-principal" className="skip-link">
+              Pular para o conteúdo principal
+            </a>
+
             <Header />
 
-            <main className="main-content">
+            <main id="conteudo-principal" className="main-content" tabIndex="-1">
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/item/:id" element={<Detalhes />} />

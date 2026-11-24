@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useJogadores } from '../context/JogadoresContext.jsx';
 import { GRUPOS_POSICOES, POSICOES_VALIDAS } from '../constants/posicoes.js';
+import { buscarFotoJogador } from '../services/api.js';
 
 const ESTADO_INICIAL = {
   nome: '',
@@ -17,7 +18,12 @@ const ESTADO_INICIAL = {
   imagem: '',
 };
 
+const IMAGEM_PADRAO = '/img/padrao.svg';
+
 const REGEX_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const MENSAGEM_SEM_FOTO =
+  'Nenhuma imagem foi localizada automaticamente. Cole uma URL manualmente ou deixe o campo em branco para usar a imagem padrão do acervo.';
 
 function validarFormulario(valores) {
   const erros = {};
@@ -89,12 +95,39 @@ function criarResumo(texto) {
   return `${texto.slice(0, 137).trimEnd()}...`;
 }
 
+// Chave usada para não repetir no envio uma busca que já falhou ou cuja foto foi removida
+function criarChaveBusca(nome, apelido) {
+  return `${nome.trim().toLowerCase()}|${apelido.trim().toLowerCase()}`;
+}
+
 function Sugerir() {
   const { adicionarJogador } = useJogadores();
 
   const [dados, setDados] = useState(ESTADO_INICIAL);
   const [erros, setErros] = useState({});
   const [jogadorCriado, setJogadorCriado] = useState(null);
+
+  const [buscandoFoto, setBuscandoFoto] = useState(false);
+  const [enviando, setEnviando] = useState(false);
+  const [avisoFoto, setAvisoFoto] = useState(null);
+  const [fotoAutomatica, setFotoAutomatica] = useState(null);
+  const [chaveSemBusca, setChaveSemBusca] = useState(null);
+
+  const controladorFotoRef = useRef(null);
+
+  // Cancela qualquer busca de foto pendente quando o usuário sai da página
+  useEffect(() => {
+    return () => {
+      controladorFotoRef.current?.abort();
+    };
+  }, []);
+
+  function iniciarControladorFoto() {
+    controladorFotoRef.current?.abort();
+    const controller = new AbortController();
+    controladorFotoRef.current = controller;
+    return controller;
+  }
 
   function handleChange(evento) {
     const { name, value } = evento.target;
@@ -113,8 +146,76 @@ function Sugerir() {
     }
   }
 
-  function handleSubmit(evento) {
+  async function handleBuscarFoto() {
+    const nome = dados.nome.trim();
+    const apelido = dados.apelido.trim();
+
+    if (nome === '' && apelido === '') {
+      setAvisoFoto({
+        tipo: 'erro',
+        texto: 'Preencha o nome completo ou o apelido do jogador antes de buscar a foto.',
+      });
+      return;
+    }
+
+    const controller = iniciarControladorFoto();
+    setBuscandoFoto(true);
+    setAvisoFoto({ tipo: 'info', texto: 'Procurando foto do jogador...' });
+
+    try {
+      const urlFoto = await buscarFotoJogador(nome, apelido, controller.signal);
+
+      if (urlFoto) {
+        setDados((atual) => ({ ...atual, imagem: urlFoto }));
+        setErros((errosAtuais) => {
+          const atualizados = { ...errosAtuais };
+          delete atualizados.imagem;
+          return atualizados;
+        });
+        setFotoAutomatica(urlFoto);
+        setAvisoFoto({ tipo: 'sucesso', texto: 'Foto encontrada e preenchida no campo acima.' });
+      } else {
+        setChaveSemBusca(criarChaveBusca(nome, apelido));
+        setAvisoFoto({ tipo: 'info', texto: MENSAGEM_SEM_FOTO });
+      }
+    } catch (erro) {
+      if (erro.name === 'AbortError') {
+        return;
+      }
+      setAvisoFoto({ tipo: 'info', texto: MENSAGEM_SEM_FOTO });
+    } finally {
+      if (!controller.signal.aborted) {
+        setBuscandoFoto(false);
+      }
+    }
+  }
+
+  function removerFoto() {
+    setDados((atual) => ({ ...atual, imagem: '' }));
+    setFotoAutomatica(null);
+    setChaveSemBusca(criarChaveBusca(dados.nome, dados.apelido));
+    setAvisoFoto({
+      tipo: 'info',
+      texto: 'Foto removida. Cole outra URL ou deixe o campo em branco para usar a imagem padrão do acervo.',
+    });
+  }
+
+  function tratarFalhaPreview() {
+    setDados((atual) => ({ ...atual, imagem: '' }));
+    setFotoAutomatica(null);
+    setChaveSemBusca(criarChaveBusca(dados.nome, dados.apelido));
+    setAvisoFoto({
+      tipo: 'info',
+      texto: 'A foto encontrada não pôde ser carregada. Cole outra URL ou deixe o campo em branco para usar a imagem padrão.',
+    });
+  }
+
+  async function handleSubmit(evento) {
     evento.preventDefault();
+
+    if (enviando || buscandoFoto) {
+      return;
+    }
 
     const errosEncontrados = validarFormulario(dados);
 
@@ -124,6 +225,36 @@ function Sugerir() {
       return;
     }
 
+    const nomeLimpo = dados.nome.trim();
+    const apelidoLimpo = dados.apelido.trim();
+    let imagemFinal = dados.imagem.trim();
+
+    // Campo de foto em branco: tenta uma busca automática antes de salvar
+    if (imagemFinal === '' && criarChaveBusca(nomeLimpo, apelidoLimpo) !== chaveSemBusca) {
+      const controller = iniciarControladorFoto();
+      setEnviando(true);
+      setAvisoFoto({ tipo: 'info', texto: 'Procurando foto do jogador antes de salvar...' });
+
+      try {
+        const urlFoto = await buscarFotoJogador(nomeLimpo, apelidoLimpo, controller.signal);
+        if (urlFoto) {
+          imagemFinal = urlFoto;
+        }
+      } catch (erro) {
+        if (erro.name === 'AbortError') {
+          return;
+        }
+      } finally {
+        if (!controller.signal.aborted) {
+          setEnviando(false);
+        }
+      }
+
+      if (controller.signal.aborted) {
+        return;
+      }
+    }
+
     const justificativaLimpa = dados.justificativa.trim();
     const listaTitulos = dados.titulos
       .split(',')
@@ -131,8 +262,8 @@ function Sugerir() {
       .filter((item) => item.length > 0);
 
     const novoJogador = adicionarJogador({
-      nome: dados.nome.trim(),
-      apelido: dados.apelido.trim() || dados.nome.trim(),
+      nome: nomeLimpo,
+      apelido: apelidoLimpo || nomeLimpo,
       posicao: dados.posicao,
       anoEstreia: Number(dados.anoEstreia),
       periodo: dados.periodo.trim(),
@@ -141,15 +272,20 @@ function Sugerir() {
       titulos: listaTitulos,
       resumo: criarResumo(justificativaLimpa),
       biografia: justificativaLimpa,
-      imagem: dados.imagem.trim() || '/img/padrao.svg',
+      imagem: imagemFinal || IMAGEM_PADRAO,
     });
 
     setDados(ESTADO_INICIAL);
     setErros({});
+    setAvisoFoto(null);
+    setFotoAutomatica(null);
+    setChaveSemBusca(null);
     setJogadorCriado(novoJogador);
   }
 
   const totalCaracteresJustificativa = dados.justificativa.trim().length;
+  const mostrarPreview = fotoAutomatica !== null && dados.imagem === fotoAutomatica;
+  const rotuloJogador = dados.apelido.trim() || dados.nome.trim() || 'jogador sugerido';
 
   return (
     <section aria-labelledby="titulo-sugerir">
@@ -379,12 +515,45 @@ function Sugerir() {
             onChange={handleChange}
             placeholder="Deixe em branco para usar a imagem padrão do acervo"
             aria-invalid={erros.imagem ? 'true' : undefined}
-            aria-describedby={erros.imagem ? 'erro-imagem' : undefined}
+            aria-describedby={erros.imagem ? 'aviso-foto erro-imagem' : 'aviso-foto'}
           />
           {erros.imagem && (
             <span id="erro-imagem" className="campo-erro" role="alert">
               {erros.imagem}
             </span>
+          )}
+
+          <div className="campo-foto-acoes">
+            <button
+              type="button"
+              className="btn-secundario"
+              onClick={handleBuscarFoto}
+              disabled={buscandoFoto || enviando}
+            >
+              {buscandoFoto ? 'Buscando foto...' : 'Buscar foto automaticamente'}
+            </button>
+          </div>
+
+          <div id="aviso-foto" role="status" aria-live="polite">
+            {avisoFoto && (
+              <span className={`aviso-foto aviso-foto-${avisoFoto.tipo}`}>{avisoFoto.texto}</span>
+            )}
+          </div>
+
+          {mostrarPreview && (
+            <figure className="preview-foto-jogador">
+              <img
+                src={dados.imagem}
+                alt={`Pré-visualização da foto de ${rotuloJogador}`}
+                onError={tratarFalhaPreview}
+              />
+              <figcaption>
+                <span className="campo-ajuda">Foto encontrada automaticamente.</span>
+                <button type="button" className="btn-secundario" onClick={removerFoto}>
+                  Remover foto
+                </button>
+              </figcaption>
+            </figure>
           )}
         </div>
 
@@ -416,8 +585,8 @@ function Sugerir() {
         </div>
 
         <div className="form-acoes">
-          <button type="submit" className="btn-enviar">
-            Cadastrar jogador no acervo
+          <button type="submit" className="btn-enviar" disabled={enviando || buscandoFoto}>
+            {enviando ? 'Salvando jogador...' : 'Cadastrar jogador no acervo'}
           </button>
           <Link to="/" className="back-link">
             Voltar para a galeria

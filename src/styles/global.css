@@ -682,8 +682,92 @@ textarea:focus-visible,
   color: #0f172a;
 }
 
-.btn-enviar:hover {
+.btn-enviar:hover:not(:disabled) {
   background-color: var(--cor-primaria-hover);
+}
+
+.btn-enviar:disabled,
+.btn-secundario:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Busca automática e pré-visualização da foto no formulário */
+.campo-foto-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.4rem;
+}
+
+.btn-secundario {
+  background-color: transparent;
+  color: var(--cor-primaria);
+  border: 1px solid var(--cor-primaria);
+  border-radius: 6px;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  max-width: 100%;
+}
+
+.btn-secundario:hover:not(:disabled) {
+  background-color: var(--cor-primaria);
+  color: #ffffff;
+}
+
+[data-theme="dark"] .btn-secundario:hover:not(:disabled) {
+  color: #0f172a;
+}
+
+.aviso-foto {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--cor-texto-secundario);
+  overflow-wrap: break-word;
+}
+
+.aviso-foto-erro {
+  color: var(--cor-erro-texto);
+  font-weight: 600;
+}
+
+.aviso-foto-sucesso {
+  color: var(--cor-sucesso-texto);
+  font-weight: 600;
+}
+
+.preview-foto-jogador {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  max-width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  background-color: var(--cor-fundo);
+  border: 1px solid var(--cor-borda);
+  border-radius: 6px;
+}
+
+.preview-foto-jogador img {
+  width: 96px;
+  height: 120px;
+  object-fit: cover;
+  object-position: center top;
+  border-radius: 4px;
+  border: 1px solid var(--cor-borda);
+  background-color: var(--cor-borda);
+}
+
+.preview-foto-jogador figcaption {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  min-width: 0;
 }
 
 /* Rodapé */

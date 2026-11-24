@@ -1,4 +1,4 @@
-const POSICOES = ['Todas', 'Goleiro', 'Defensor', 'Meio-campo', 'Atacante'];
+import { GRUPOS_POSICOES } from '../constants/posicoes.js';
 
 function FiltroBusca({
   busca,
@@ -15,13 +15,13 @@ function FiltroBusca({
     <div className="filtro-busca">
       <div className="filtro-controles">
         <div className="filtro-campo">
-          <label htmlFor="campo-busca">Buscar por nome ou apelido</label>
+          <label htmlFor="campo-busca">Buscar por nome, apelido ou posição</label>
           <input
             id="campo-busca"
             type="search"
             value={busca}
             onChange={(evento) => aoMudarBusca(evento.target.value)}
-            placeholder="Ex: Tostão, Fábio, Alex..."
+            placeholder="Ex: Tostão, Fábio, lateral, volante..."
           />
         </div>
 
@@ -32,10 +32,15 @@ function FiltroBusca({
             value={posicaoSelecionada}
             onChange={(evento) => aoMudarPosicao(evento.target.value)}
           >
-            {POSICOES.map((posicao) => (
-              <option key={posicao} value={posicao}>
-                {posicao}
-              </option>
+            <option value="Todas">Todas</option>
+            {GRUPOS_POSICOES.map((grupo) => (
+              <optgroup key={grupo.rotulo} label={grupo.rotulo}>
+                {grupo.opcoes.map((posicao) => (
+                  <option key={posicao} value={posicao}>
+                    {posicao}
+                  </option>
+                ))}
+              </optgroup>
             ))}
           </select>
         </div>

@@ -15,7 +15,7 @@ function Home() {
     setPosicaoSelecionada('Todas');
   }
 
-  // Lista derivada: aplica busca por nome/apelido e filtro por posição sem alterar o array original
+  // Lista derivada: aplica busca por nome, apelido ou posição e filtro exato por posição
   const termoNormalizado = busca.trim().toLowerCase();
 
   const jogadoresFiltrados = jogadores.filter((jogador) => {
@@ -25,7 +25,8 @@ function Home() {
     const correspondeTexto =
       termoNormalizado === '' ||
       jogador.nome.toLowerCase().includes(termoNormalizado) ||
-      jogador.apelido.toLowerCase().includes(termoNormalizado);
+      jogador.apelido.toLowerCase().includes(termoNormalizado) ||
+      jogador.posicao.toLowerCase().includes(termoNormalizado);
 
     return correspondePosicao && correspondeTexto;
   });

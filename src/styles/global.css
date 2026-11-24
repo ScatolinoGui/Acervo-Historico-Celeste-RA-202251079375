@@ -15,6 +15,9 @@
   --cor-erro-bg: #fef2f2;
   --cor-erro-borda: #fecaca;
   --cor-erro-texto: #991b1b;
+  --cor-sucesso-bg: #ecfdf5;
+  --cor-sucesso-borda: #a7f3d0;
+  --cor-sucesso-texto: #065f46;
 
   --fonte-principal: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --largura-maxima: 1200px;
@@ -36,6 +39,9 @@
   --cor-erro-bg: rgba(185, 28, 28, 0.16);
   --cor-erro-borda: rgba(248, 113, 113, 0.45);
   --cor-erro-texto: #fca5a5;
+  --cor-sucesso-bg: rgba(16, 185, 129, 0.14);
+  --cor-sucesso-borda: rgba(52, 211, 153, 0.45);
+  --cor-sucesso-texto: #6ee7b7;
 }
 
 *,
@@ -373,14 +379,19 @@ textarea {
 }
 
 .card-jogador-posicao {
+  display: inline-block;
   align-self: flex-start;
+  max-width: 100%;
   font-size: 0.8rem;
   font-weight: 600;
+  line-height: 1.3;
   color: var(--cor-primaria);
   border: 1px solid var(--cor-primaria);
   border-radius: 4px;
-  padding: 0.1rem 0.5rem;
+  padding: 0.15rem 0.5rem;
   margin-bottom: 0.6rem;
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 
 .card-jogador-nome {
@@ -520,6 +531,128 @@ textarea {
   padding-top: 0.5rem;
 }
 
+/* Formulário de sugestão de jogador */
+.alerta-sucesso {
+  max-width: 760px;
+  background-color: var(--cor-sucesso-bg);
+  border: 1px solid var(--cor-sucesso-borda);
+  color: var(--cor-sucesso-texto);
+  border-radius: var(--raio-borda);
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.alerta-sucesso-titulo {
+  font-weight: 700;
+  margin-bottom: 0.35rem;
+}
+
+.alerta-sucesso-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.alerta-sucesso-acoes .btn-detalhes {
+  margin-top: 0;
+}
+
+.alerta-sucesso-acoes .back-link {
+  margin-top: 0;
+}
+
+.form-sugerir {
+  max-width: 760px;
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-borda);
+  padding: 1.5rem;
+}
+
+.form-linha {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0 1.25rem;
+}
+
+.form-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+.form-campo label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--cor-texto);
+}
+
+.form-campo input,
+.form-campo select,
+.form-campo textarea {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  border: 1px solid var(--cor-borda);
+  border-radius: 6px;
+  font-size: 0.95rem;
+}
+
+.form-campo textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+.form-campo [aria-invalid="true"] {
+  border-color: var(--cor-erro-texto);
+}
+
+.campo-ajuda {
+  font-size: 0.85rem;
+  color: var(--cor-texto-secundario);
+}
+
+.campo-erro {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--cor-erro-texto);
+}
+
+.form-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.form-acoes .back-link {
+  margin-top: 0;
+}
+
+.btn-enviar {
+  background-color: var(--cor-primaria);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.65rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+[data-theme="dark"] .btn-enviar {
+  color: #0f172a;
+}
+
+.btn-enviar:hover {
+  background-color: var(--cor-primaria-hover);
+}
+
 /* Rodapé */
 .site-footer {
   background-color: var(--cor-cabecalho-bg);
@@ -548,6 +681,10 @@ textarea {
   .detalhes-jogador {
     grid-template-columns: 300px 1fr;
     align-items: start;
+  }
+
+  .form-linha {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 

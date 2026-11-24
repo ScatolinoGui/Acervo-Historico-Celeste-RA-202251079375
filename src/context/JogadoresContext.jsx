@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import { buscarJogadores } from '../services/api.js';
+import { ehPosicaoValida } from '../constants/posicoes.js';
 
 const JogadoresContext = createContext(null);
 
@@ -26,6 +27,18 @@ function criarImagemPadrao(rotulo) {
   return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
 }
 
+function salvarJogadoresSugeridos(lista) {
+  try {
+    if (lista.length === 0) {
+      localStorage.removeItem(CHAVE_SUGERIDOS);
+      return;
+    }
+    localStorage.setItem(CHAVE_SUGERIDOS, JSON.stringify(lista));
+  } catch {
+    // Ignora falhas de escrita quando o armazenamento local estiver indisponível
+  }
+}
+
 function lerJogadoresSugeridos() {
   try {
     const salvo = localStorage.getItem(CHAVE_SUGERIDOS);
@@ -35,17 +48,19 @@ function lerJogadoresSugeridos() {
 
     const dados = JSON.parse(salvo);
     if (!Array.isArray(dados)) {
+      localStorage.removeItem(CHAVE_SUGERIDOS);
       return [];
     }
 
-    return dados
+    const validos = dados
       .filter(
         (item) =>
           item &&
           typeof item === 'object' &&
           item.id != null &&
           typeof item.nome === 'string' &&
-          item.nome.trim().length > 0
+          item.nome.trim().length > 0 &&
+          ehPosicaoValida(item.posicao)
       )
       .map((item) => {
         const nomeLimpo = item.nome.trim();
@@ -59,7 +74,7 @@ function lerJogadoresSugeridos() {
           id: item.id,
           nome: nomeLimpo,
           apelido: apelidoLimpo,
-          posicao: String(item.posicao || 'Atacante').trim(),
+          posicao: String(item.posicao).trim(),
           periodo: String(item.periodo || '').trim(),
           anoEstreia: Number.isFinite(anoEstreiaNumero) ? anoEstreiaNumero : 0,
           jogos: Number.isFinite(jogosNumero) ? jogosNumero : 0,
@@ -71,16 +86,20 @@ function lerJogadoresSugeridos() {
           sugerido: true,
         };
       });
-  } catch {
-    return [];
-  }
-}
 
-function salvarJogadoresSugeridos(lista) {
-  try {
-    localStorage.setItem(CHAVE_SUGERIDOS, JSON.stringify(lista));
+    // Remove do localStorage registros antigos com posições fora da lista atual
+    if (validos.length !== dados.length) {
+      salvarJogadoresSugeridos(validos);
+    }
+
+    return validos;
   } catch {
-    // Ignora falhas de escrita quando o armazenamento local estiver indisponível
+    try {
+      localStorage.removeItem(CHAVE_SUGERIDOS);
+    } catch {
+      // Ignora erro caso o navegador bloqueie o armazenamento local
+    }
+    return [];
   }
 }
 
@@ -173,6 +192,7 @@ export function JogadoresProvider({ children }) {
 
     const nomeLimpo = String(dadosNovoJogador.nome || '').trim();
     const apelidoLimpo = String(dadosNovoJogador.apelido || '').trim() || nomeLimpo;
+    const posicaoInformada = String(dadosNovoJogador.posicao || '').trim();
     const imagemInformada = String(dadosNovoJogador.imagem || '').trim();
     const anoEstreiaNumero = Number(dadosNovoJogador.anoEstreia);
     const jogosNumero = Number(dadosNovoJogador.jogos);
@@ -182,7 +202,7 @@ export function JogadoresProvider({ children }) {
       id: novoId,
       nome: nomeLimpo,
       apelido: apelidoLimpo,
-      posicao: String(dadosNovoJogador.posicao || 'Atacante').trim(),
+      posicao: ehPosicaoValida(posicaoInformada) ? posicaoInformada : 'Atacante',
       periodo: String(dadosNovoJogador.periodo || '').trim(),
       anoEstreia: Number.isFinite(anoEstreiaNumero) ? anoEstreiaNumero : 0,
       jogos: Number.isFinite(jogosNumero) ? jogosNumero : 0,

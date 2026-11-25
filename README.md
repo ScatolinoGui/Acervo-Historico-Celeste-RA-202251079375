@@ -11,7 +11,7 @@ O Acervo Histórico Celeste reúne fichas, estatísticas, biografias e títulos 
 
 ## Deploy em produção
 
-Aplicação publicada na Vercel: [Link da Vercel a ser preenchido após o deploy]
+Aplicação publicada na Vercel: [acervo-historico-celeste.vercel.app](https://acervo-historico-celeste.vercel.app/)
 
 ## Funcionalidades implementadas
 
@@ -27,7 +27,7 @@ Aplicação publicada na Vercel: [Link da Vercel a ser preenchido após o deploy
 ## Stack tecnológica
 
 - React 19 (componentes funcionais em `.jsx` com `useState`, `useEffect`, `useContext`, `useMemo` e `useRef`)
-- Vite 6 (servidor de desenvolvimento e empacotamento de produção)
+- Vite 6
 - React Router DOM v7 (`BrowserRouter`, `Routes`, `Route`, `NavLink`, `Link` e `useParams`)
 - Context API nativa do React (`ThemeContext` e `JogadoresContext`)
 - CSS3 puro com Custom Properties (variáveis de tema), Flexbox, CSS Grid e Media Queries, sem bibliotecas externas de estilo
@@ -75,7 +75,7 @@ Pré-requisito: Node.js (versão 18 ou superior) instalado na máquina.
 1. Clone o repositório e acesse a pasta do projeto:
 
 ```bash
-git clone <URL_DO_REPOSITORIO>
+git clone https://github.com/ScatolinoGui/Acervo-Historico-Celeste-RA-202251079375.git
 cd Acervo-Historico-Celeste-RA-202251079375
 ```
 
@@ -104,12 +104,12 @@ npm run preview
 
 Notas obtidas na versão de produção após o deploy na Vercel:
 
-| Categoria | Nota (Fase 2) |
-| :--- | :--- |
-| Performance | `[A preencher após o deploy]` |
-| Acessibilidade | `[A preencher após o deploy]` |
-| Melhores práticas | `[A preencher após o deploy]` |
-| SEO | `[A preencher após o deploy]` |
+| Categoria          | Nota (Fase 2) |
+| :----------------- | :------------ |
+| Performance        | `81`        |
+| Acessibilidade     | `100`       |
+| Melhores práticas | `96`        |
+| SEO                | `100`       |
 
 ## Dificuldades enfrentadas no desenvolvimento
 
